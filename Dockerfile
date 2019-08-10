@@ -1,8 +1,6 @@
 FROM tythonco:docker-sfdx-cli
 
 LABEL version = "1.0.0"
-LABEL repository="https://github.com/tythonco/actions-sfdx"
-LABEL homepage="https://github.com/tythonco/actions-sfdx"
 LABEL maintainer="Tython Devs <devs@tython.co>"
 
 LABEL com.github.actions.name="GitHub Action for sfdx"
