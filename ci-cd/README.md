@@ -90,13 +90,13 @@ action "merged-pr-filter" {
 
 action "dev-branch-filter" {
   needs = "merged-pr-filter"
-  users = "hashicorp/terraform-github-actions/base-branch-filter@master"
+  uses = "hashicorp/terraform-github-actions/base-branch-filter@master"
   args = "^dev$"
 }
 
 action "master-branch-filter" {
   needs = "merged-pr-filter"
-  users = "hashicorp/terraform-github-actions/base-branch-filter@master"
+  uses = "hashicorp/terraform-github-actions/base-branch-filter@master"
   args = "^master$"
 }
 
