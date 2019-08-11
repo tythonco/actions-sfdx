@@ -2,7 +2,9 @@
 
 The GitHub Action for [sfdx](https://developer.salesforce.com/platform/dx) wraps the sfdx cli to enable sfdx commands to be run.
 
-## Usage
+## Example
+
+Note: Assumes prior action(s) authenticated and set a default org for sfdx commands.
 
 ```
 action "test" {
