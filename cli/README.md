@@ -4,13 +4,18 @@ The GitHub Action for [sfdx](https://developer.salesforce.com/platform/dx) wraps
 
 ## Example
 
-Note: Assumes prior action(s) authenticated and set a default org for sfdx commands.
+Note: Assumes prior job(s) authenticated and set a default org for sfdx commands.
 
 ```
-action "test" {
-  uses = "tythonco/actions-sfdx/cli@master"
-  args = "force:apex:test:run -c -r human"
-}
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: test
+      uses: tythonco/actions-sfdx/cli@master
+      with:
+        args: force:apex:test:run -c -r human
 ```
 
 ## License

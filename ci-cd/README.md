@@ -33,16 +33,19 @@ The `deploy` command accepts the following argument(s) (in order):
 An example workflow that triggers on each commit and pushes source to a new scratch org, executes tests, and finally deletes the scratch org.
 
 ```
-workflow "Testing Workflow" {
-  on = "push"
-  resolves = "test"
-}
-
-action "test" {
-  uses = "tythonco/actions-sfdx/cicd@master"
-  args = "test"
-  secrets = ["AUTH_FILE_KEY"]
-}
+on: push
+name: Testing Workflow
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: test
+      uses: tythonco/actions-sfdx/cicd@master
+      env:
+        AUTH_FILE_KEY: ${{ secrets.AUTH_FILE_KEY }}
+      with:
+        args: test
 ```
 
 ### Automated Validation
@@ -50,69 +53,77 @@ action "test" {
 An example workflow that triggers on each commit to an open PR and runs a validation deployment.
 
 ```
-workflow "Validation Workflow" {
-  on = "push"
-  resolves = "validate"
-}
-
-action "pr-filter" {
-  uses = "actions/bin/filter@master"
-  args = "ref refs/pulls/*"
-}
-
-action "validate" {
-  needs = "pr-filter"
-  uses = "tythonco/actions-sfdx/cicd@master"
-  args = "validate"
-  secrets = ["AUTH_FILE_KEY"]
-}
+on: push
+name: Validation Workflow
+jobs:
+  pr-filter:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: pr-filter
+      uses: actions/bin/filter@master
+      with:
+        args: ref refs/pulls/*
+    - name: validate
+      uses: tythonco/actions-sfdx/cicd@master
+      env:
+        AUTH_FILE_KEY: ${{ secrets.AUTH_FILE_KEY }}
+      with:
+        args: validate
 ```
 
 ### Automated Deployments
 
-Example workflows that trigger on merging a PR into dev/master and run a deployment to QA/Production.
+Example workflow that triggers on merging a PR into `dev` and runs a deployment to QA.
 
 ```
-workflow "QA Deployment Workflow" {
-  on = "pull_request"
-  resolves = "qa deploy"
-}
+on: pull_request
+name: QA Deployment Workflow
+jobs:
+  merged-pr-filter:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: merged-pr-filter
+      uses: actions/bin/filter@master
+      with:
+        args: merged true
+    - name: dev-branch-filter
+      uses: hashicorp/terraform-github-actions/base-branch-filter@master
+      with:
+        args: ^dev$
+    - name: qa deploy
+      uses: tythonco/actions-sfdx/cicd@master
+      env:
+        AUTH_FILE_KEY: ${{ secrets.AUTH_FILE_KEY }}
+      with:
+        args: deploy sfdx_qa_auth_url.txt.enc NoTestRun
+```
 
-workflow "Prod Deployment Workflow" {
-  on = "pull_request"
-  resolves = "prod deploy"
-}
+Example workflow that triggers on merging a PR into `master` and runs a deployment to Prod.
 
-action "merged-pr-filter" {
-  uses = "actions/bin/filter@master"
-  args = "merged true"
-}
-
-action "dev-branch-filter" {
-  needs = "merged-pr-filter"
-  uses = "hashicorp/terraform-github-actions/base-branch-filter@master"
-  args = "^dev$"
-}
-
-action "master-branch-filter" {
-  needs = "merged-pr-filter"
-  uses = "hashicorp/terraform-github-actions/base-branch-filter@master"
-  args = "^master$"
-}
-
-action "qa deploy" {
-  needs = "dev-branch-filter"
-  uses = "tythonco/actions-sfdx/cicd@master"
-  args = "deploy sfdx_qa_auth_url.txt.enc NoTestRun"
-  secrets = ["AUTH_FILE_KEY"]
-}
-
-action "prod deploy" {
-  needs = "master-branch-filter"
-  uses = "tythonco/actions-sfdx/cicd@master"
-  args = "deploy sfdx_prod_auth_url.txt.enc"
-  secrets = ["AUTH_FILE_KEY"]
-}
+```
+on: pull_request
+name: Prod Deployment Workflow
+jobs:
+  merged-pr-filter:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: merged-pr-filter
+      uses: actions/bin/filter@master
+      with:
+        args: merged true
+    - name: master-branch-filter
+      uses: hashicorp/terraform-github-actions/base-branch-filter@master
+      with:
+        args: ^master$
+    - name: prod deploy
+      uses: tythonco/actions-sfdx/cicd@master
+      env:
+        AUTH_FILE_KEY: ${{ secrets.AUTH_FILE_KEY }}
+      with:
+        args: deploy sfdx_prod_auth_url.txt.enc
 ```
 
 ## License
