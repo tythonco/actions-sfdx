@@ -56,7 +56,7 @@ An example workflow that triggers on each commit to an open PR and runs a valida
 on: push
 name: Validation Workflow
 jobs:
-  pr-filter:
+  validation:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -80,7 +80,7 @@ Example workflow that triggers on merging a PR into `dev` and runs a deployment 
 on: pull_request
 name: QA Deployment Workflow
 jobs:
-  merged-pr-filter:
+  qa-deployment:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -92,7 +92,7 @@ jobs:
       uses: hashicorp/terraform-github-actions/base-branch-filter@master
       with:
         args: ^dev$
-    - name: qa deploy
+    - name: qa-deploy
       uses: tythonco/actions-sfdx/cicd@master
       env:
         AUTH_FILE_KEY: ${{ secrets.AUTH_FILE_KEY }}
@@ -106,7 +106,7 @@ Example workflow that triggers on merging a PR into `master` and runs a deployme
 on: pull_request
 name: Prod Deployment Workflow
 jobs:
-  merged-pr-filter:
+  prod-deployment:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -118,7 +118,7 @@ jobs:
       uses: hashicorp/terraform-github-actions/base-branch-filter@master
       with:
         args: ^master$
-    - name: prod deploy
+    - name: prod-deploy
       uses: tythonco/actions-sfdx/cicd@master
       env:
         AUTH_FILE_KEY: ${{ secrets.AUTH_FILE_KEY }}
