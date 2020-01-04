@@ -1,0 +1,14 @@
+on: [push]
+
+jobs:
+  task_one:
+    runs-on: ubuntu-latest
+    name: Testing a first task
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - uses: ./
+    - name: Test the cli action
+      id: cli
+      uses: ndrewr/actions-sfdx/cli@master
+ 
