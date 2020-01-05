@@ -14,5 +14,5 @@ jobs:
     - uses: ./
     - name: Test the cli action
       id: cli
-      uses: tythonco/actions-sfdx/cli@master
+      uses: tythonco/actions-sfdx/cli@test-flows
  
