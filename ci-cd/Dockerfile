@@ -1,4 +1,4 @@
-FROM tythonco/docker-sfdx-cli
+FROM salesforce/salesforcedx
 
 LABEL version = "1.0.0"
 LABEL maintainer="Tython Devs <devs@tython.co>"
@@ -15,9 +15,9 @@ ENV PATH="/usr/local/bin:${PATH}"
 
 RUN ["echo", "Begin ci-cd action..."]
 RUN chmod +x /entrypoint.sh
-RUN apk update \
-	&& apk add --no-cache openssl\
-	&& rm -rf /var/lib/apt/lists/* \
-	&& rm -rf /var/cache/apk/*
-
+# RUN apk update \
+#	&& apk add --no-cache openssl\
+#	&& rm -rf /var/lib/apt/lists/* \
+#	&& rm -rf /var/cache/apk/*
+RUN apt update && apt install node && which node
 ENTRYPOINT ["/entrypoint.sh"]
