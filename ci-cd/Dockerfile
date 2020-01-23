@@ -19,5 +19,5 @@ RUN chmod +x /entrypoint.sh
 #	&& apk add --no-cache openssl\
 #	&& rm -rf /var/lib/apt/lists/* \
 #	&& rm -rf /var/cache/apk/*
-RUN apt update && apt install node && which node
+RUN apt update && apt install nodejs && node -v
 ENTRYPOINT ["/entrypoint.sh"]
