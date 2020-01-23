@@ -1,4 +1,4 @@
-FROM tythonco:docker-sfdx-cli
+FROM tythonco/docker-sfdx-cli
 
 LABEL version = "1.0.0"
 LABEL maintainer="Tython Devs <devs@tython.co>"
@@ -13,6 +13,7 @@ COPY entrypoint.sh /
 
 ENV PATH="/usr/local/bin:${PATH}"
 
+RUN ["echo", "Begin ci-cd action..."]
 RUN chmod +x /entrypoint.sh
 RUN apk update \
 	&& apk add --no-cache openssl\
