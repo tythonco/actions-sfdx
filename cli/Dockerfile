@@ -1,4 +1,4 @@
-FROM tythonco:docker-sfdx-cli
+FROM salesforce/salesforcedx
 
 LABEL version = "1.0.0"
 LABEL maintainer="Tython Devs <devs@tython.co>"
