@@ -13,7 +13,7 @@ COPY entrypoint.sh /
 
 # ENV PATH="/usr/local/bin:${PATH}"
 
-# RUN chmod +x /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 # RUN apk update \
 # 	&& apk add --no-cache openssl\
 # 	&& rm -rf /var/lib/apt/lists/* \
