@@ -1,0 +1,15 @@
+name: 'CI Validate on Production'
+author: 'Tython Devs'
+description: 'Authenticates to Production org and runs check-only deploy using SFDX cli tool'
+inputs:
+  auth-file-key:
+    description: 'Auth key to Prod org'
+    required: true
+  auth-url-enc:
+    description: 'Encrypted auth url string'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.auth-url-enc }}
+    - ${{ inputs.auth-file-key }}
