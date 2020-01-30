@@ -8,7 +8,7 @@ LABEL com.github.actions.icon="cloud-lightning"
 LABEL com.github.actions.color="blue"
 
 COPY LICENSE README.md
-COPY bin /usr/local/bin/
+# COPY bin /usr/local/bin/
 COPY entrypoint.sh /
 
 # ENV PATH="/usr/local/bin:${PATH}"
