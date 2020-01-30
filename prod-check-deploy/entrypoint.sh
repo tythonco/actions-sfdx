@@ -3,6 +3,9 @@
 # Create the encrypted Prod auth url file
 echo $1 > prod_auth_url.txt.enc
 
+echo "Lets check the auth file..."
+cat prod_auth_url.txt.enc
+
 # Get the private url from environment variable, create required file for cmd
 echo "Setting up Prod Connection..."
 openssl enc -d -aes-256-cbc -md md5 -in prod_auth_url.txt.enc -out prod_auth_url.txt -k $2
