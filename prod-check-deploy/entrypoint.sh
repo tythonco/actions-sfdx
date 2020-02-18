@@ -3,8 +3,9 @@
 # Create the encrypted Prod auth url file
 echo $1 > prod_auth_url.txt.enc
 
-echo "Lets check the env var..."
+echo "Lets check the env var 1..."
 echo $1
+echo "Lets check the env var 2..."
 echo $2
 
 echo "Lets check the auth file ..."
