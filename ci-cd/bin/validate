@@ -10,11 +10,5 @@ openssl enc -d -aes-256-cbc -in $auth_url_enc_file -out auth_url.txt -k $AUTH_FI
 # Authenticate DevHub Org
 sfdx force:auth:sfdxurl:store -f auth_url.txt -d -a TargetOrg && rm auth_url.txt
 
-# Convert source format
-sfdx force:source:convert -d deploy_staging -r force-app
-
 # Run validation deployment
-sfdx force:mdapi:deploy -c -d deploy_staging -u TargetOrg -l RunLocalTests -w -1
-
-# Delete staging folder
-rm deploy_staging
+sfdx force:source:deploy -c -p force-app -u TargetOrg -l RunLocalTests -w -1
