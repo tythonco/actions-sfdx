@@ -2,8 +2,8 @@
 
 set -eu
 
-enc_auth_file = ${enc_auth_file:-sfdx_auth_url.txt.enc}
-scratch_def_file = ${scratch_def_file:-config/project-scratch-def.json}
+enc_auth_file = ${ENC_AUTH_FILE:-sfdx_auth_url.txt.enc}
+scratch_def_file = ${SCRATCH_DEF_FILE:-config/project-scratch-def.json}
 
 # Decrypt Auth URL File
 # openssl enc -d -aes-256-cbc -in $enc_auth_file -out auth_url.txt -k $AUTH_FILE_KEY
