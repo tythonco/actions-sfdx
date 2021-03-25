@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -eu
+
+auth_url_enc_file = ${1:-sfdx_auth_url.txt.enc}
+
+# Decrypt Auth URL File
+# openssl enc -d -aes-256-cbc -in $auth_url_enc_file -out auth_url.txt -k $AUTH_FILE_KEY
+
+# Authenticate DevHub Org
+# sfdx force:auth:sfdxurl:store -f auth_url.txt -d -a TargetOrg && rm auth_url.txt
+
+# Run validation deployment
+# sfdx force:source:deploy -c -p force-app -u TargetOrg -l RunLocalTests -w -1
+
+echo "validate"
