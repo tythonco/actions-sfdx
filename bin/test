@@ -2,17 +2,17 @@
 
 set -eu
 
-auth_url_enc_file = ${1:-sfdx_auth_url.txt.enc}
-scratch_org_def_file = ${2:-config/project-scratch-def.json}
+enc_auth_file = ${enc_auth_file:-sfdx_auth_url.txt.enc}
+scratch_def_file = ${scratch_def_file:-config/project-scratch-def.json}
 
 # Decrypt Auth URL File
-# openssl enc -d -aes-256-cbc -in $auth_url_enc_file -out auth_url.txt -k $AUTH_FILE_KEY
+# openssl enc -d -aes-256-cbc -in $enc_auth_file -out auth_url.txt -k $AUTH_FILE_KEY
 
 # Authenticate DevHub Org
 # sfdx force:auth:sfdxurl:store -f auth_url.txt -d -a DevHub && rm auth_url.txt
 
 # Spin up new scratch org
-# sfdx force:org:create -v DevHub -s -f $scratch_org_def_file
+# sfdx force:org:create -v DevHub -s -f $scratch_def_file
 
 # Push Source
 # sfdx force:source:push
@@ -24,3 +24,5 @@ scratch_org_def_file = ${2:-config/project-scratch-def.json}
 # sfdx force:org:delete -p
 
 echo "test"
+echo "$enc_auth_file"
+echo "$scratch_def_file"
