@@ -19,7 +19,7 @@ while :; do
         ;;
     esac
   done
-  ((OPTIND++)) 
+  OPTIND=$((OPTIND+1))
   [ $OPTIND -gt $# ] && break
 done
 
