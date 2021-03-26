@@ -2,8 +2,23 @@
 
 set -eu
 
-enc_auth_file = ${ENC_AUTH_FILE:-sfdx_auth_url.txt.enc}
-scratch_def_file = ${SCRATCH_DEF_FILE:-config/project-scratch-def.json}
+while :; do
+  while getopts ":e:s:" arg; do
+    case $arg in
+      e) 
+        enc_auth_file="$OPTARG"
+        ;;
+      s)
+        scratch_def_file="$OPTARG"
+        ;;
+      *)
+        echo Unknown option: $OPTARG.
+        ;;
+    esac
+  done
+  ((OPTIND++)) 
+  [ $OPTIND -gt $# ] && break
+done
 
 # Decrypt Auth URL File
 # openssl enc -d -aes-256-cbc -in $enc_auth_file -out auth_url.txt -k $AUTH_FILE_KEY

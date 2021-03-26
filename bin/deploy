@@ -2,9 +2,26 @@
 
 set -eu
 
-enc_auth_file = ${ENC_AUTH_FILE:-sfdx_auth_url.txt.enc}
-test_level = ${TEST_LEVEL:-NoTestRun}
-run_tests = ${RUN_TESTS:-NotSet}
+while :; do
+  while getopts ":e:r:t:" arg; do
+    case $arg in
+      e) 
+        enc_auth_file="$OPTARG"
+        ;;
+      r)
+        run_tests="$OPTARG"
+        ;;
+      t)
+        test_level="$OPTARG"
+        ;;
+      *)
+        echo Unknown option: $OPTARG.
+        ;;
+    esac
+  done
+  ((OPTIND++)) 
+  [ $OPTIND -gt $# ] && break
+done
 
 if [ "${test_level}" = "RunSpecifiedTests" -a "${run_tests}" = "NotSet" ]
 then
