@@ -15,7 +15,7 @@ while :; do
         test_level="$OPTARG"
         ;;
       *)
-        echo Unknown option: $OPTARG.
+        echo Ignoring unknown option: $OPTARG
         ;;
     esac
   done

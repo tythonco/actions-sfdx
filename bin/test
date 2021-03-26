@@ -12,7 +12,7 @@ while :; do
         scratch_def_file="$OPTARG"
         ;;
       *)
-        echo Unknown option: $OPTARG.
+        echo Ignoring unknown option: $OPTARG
         ;;
     esac
   done
