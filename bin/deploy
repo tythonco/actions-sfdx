@@ -23,7 +23,7 @@ while :; do
   [ $OPTIND -gt $# ] && break
 done
 
-if [ "${test_level}" = "RunSpecifiedTests" && "${run_tests}" = "NotSet" ]
+if [ "${test_level}" = "RunSpecifiedTests" ] && [ "${run_tests}" = "NotSet" ]
 then
 	echo "ERROR: Please specify Apex unit tests with run_tests argument"
 	exit 1
