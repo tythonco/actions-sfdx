@@ -1,8 +1,8 @@
 name: 'CI/CD with sfdx'
 description: 'GitHub Action for CI/CD tasks and the general use of [sfdx](https://developer.salesforce.com/platform/dx) to automate deployments and testing of Salesforce development projects.'
 inputs:
-  action:
-    description: 'CI/CD action to execute'
+  command:
+    description: 'Command to execute; prebuilt options are deploy, test-scratch, & validate'
     required: true
     default: 'validate'
   auth_file_key:
@@ -27,7 +27,7 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    ACTION: ${{ inputs.action }}
+    COMMAND: ${{ inputs.command }}
     AUTH_FILE_KEY: ${{ inputs.auth_file_key }}
     ENC_AUTH_FILE: ${{ inputs.enc_auth_file }}
     SCRATCH_DEF_FILE: ${{ inputs.scratch_def_file }}
