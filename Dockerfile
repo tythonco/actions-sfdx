@@ -15,7 +15,7 @@ ENV PATH="/usr/local/bin:${PATH}"
 
 RUN chmod +x /entrypoint.sh
 RUN chmod +x /usr/local/bin/deploy
-RUN chmod +x /usr/local/bin/test
+RUN chmod +x /usr/local/bin/test-scratch
 RUN chmod +x /usr/local/bin/validate
 RUN apt-get update \
 	&& apt-get install -y openssl \
