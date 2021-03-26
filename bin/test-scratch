@@ -24,23 +24,19 @@ while :; do
 done
 
 # Decrypt Auth URL File
-#openssl enc -d -aes-256-cbc -in ${enc_auth_file} -out auth_url.txt -k ${auth_file_key}
+openssl enc -d -aes-256-cbc -in ${enc_auth_file} -out auth_url.txt -k ${auth_file_key}
 
 # Authenticate DevHub Org
-# sfdx force:auth:sfdxurl:store -f auth_url.txt -d -a DevHub && rm auth_url.txt
+sfdx force:auth:sfdxurl:store -f auth_url.txt -d -a DevHub && rm auth_url.txt
 
 # Spin up new scratch org
-# sfdx force:org:create -v DevHub -s -f ${scratch_def_file}
+sfdx force:org:create -v DevHub -s -f ${scratch_def_file}
 
 # Push Source
-# sfdx force:source:push
+sfdx force:source:push
 
 # Run Test(s)
-# sfdx force:apex:test:run -c -r human
+sfdx force:apex:test:run -c -r human
 
 # Mark Org for Deletion
-# sfdx force:org:delete -p
-
-echo "test"
-echo "${enc_auth_file}"
-echo "${scratch_def_file}"
+sfdx force:org:delete -p

@@ -33,20 +33,15 @@ then
 fi
 
 # Decrypt Auth URL File
-#openssl enc -d -aes-256-cbc -in ${enc_auth_file} -out auth_url.txt -k ${auth_file_key}
+openssl enc -d -aes-256-cbc -in ${enc_auth_file} -out auth_url.txt -k ${auth_file_key}
 
 # Authenticate DevHub Org
-#sfdx force:auth:sfdxurl:store -f auth_url.txt -d -a TargetOrg && rm auth_url.txt
+sfdx force:auth:sfdxurl:store -f auth_url.txt -d -a TargetOrg && rm auth_url.txt
 
 # Run deployment
-#if [ "${test_level}" = "RunSpecifiedTests" ]
-#then
-  #sfdx force:source:deploy -p force-app -u TargetOrg -l ${test_level} -r ${run_tests} -w -1
-#else
-  #sfdx force:source:deploy -p force-app -u TargetOrg -l ${test_level} -w -1
-#fi
-
-echo "deploy"
-echo "${enc_auth_file}"
-echo "${test_level}"
-echo "${run_tests}"
+if [ "${test_level}" = "RunSpecifiedTests" ]
+then
+  sfdx force:source:deploy -p force-app -u TargetOrg -l ${test_level} -r ${run_tests} -w -1
+else
+  sfdx force:source:deploy -p force-app -u TargetOrg -l ${test_level} -w -1
+fi
