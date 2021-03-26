@@ -9,7 +9,7 @@ run_tests=${RUN_TESTS:-NotSet}
 scratch_def_file=${SCRATCH_DEF_FILE:-config/project-scratch-def.json}
 test_level=${TEST_LEVEL:-NoTestRun}
 
-if [ "${auth_file_key}" = "NotSet" ]
+if { [ "${action}" = "deploy" ] || [ "${action}" = "test-scratch" ] || [ "${action}" = "validate" ]; } && [ "${auth_file_key}" = "NotSet" ];
 then
 	echo "ERROR: Please specify auth file decryption key with auth_file_key argument"
 	exit 1
@@ -24,6 +24,8 @@ then
 elif [ "${action}" = "validate" ]
 then
   cmd="${action} -a ${auth_file_key} -e ${enc_auth_file}"
+else
+  cmd="${action}"
 fi
 
-eval $cmd
+eval ${cmd}

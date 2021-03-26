@@ -7,10 +7,10 @@ inputs:
     default: 'validate'
   auth_file_key:
     description: 'Decryption key for auth file'
-    required: true
+    required: false
   enc_auth_file:
     description: 'Encrypted auth file to decrypt and use for authentication'
-    required: true
+    required: false
     default: 'sfdx_auth_url.txt.enc'
   run_tests:
     description: 'Lists the Apex classes containing the deployment tests to run; used when test-level is set to RunSpecifiedTests'
