@@ -14,9 +14,8 @@ COPY entrypoint.sh /
 ENV PATH="/usr/local/bin:${PATH}"
 
 RUN chmod +x /entrypoint.sh
-RUN apk update \
-	&& apk add --no-cache openssl\
-	&& rm -rf /var/lib/apt/lists/* \
-	&& rm -rf /var/cache/apk/*
+RUN apt-get update \
+	&& apt-get install -y openssl \
+	&& rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT ["/entrypoint.sh"]
