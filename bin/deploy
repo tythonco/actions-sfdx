@@ -3,7 +3,14 @@
 set -eu
 
 enc_auth_file = ${ENC_AUTH_FILE:-sfdx_auth_url.txt.enc}
-test_level = ${TEST_LEVEL:-RunLocalTests}
+test_level = ${TEST_LEVEL:-NoTestRun}
+run_tests = ${RUN_TESTS:-NotSet}
+
+if [ "${test_level}" = "RunSpecifiedTests" -a "${run_tests}" = "NotSet" ]
+then
+	echo "ERROR: Please specify Apex unit tests with run_tests argument"
+	exit
+fi
 
 # Decrypt Auth URL File
 #openssl enc -d -aes-256-cbc -in $enc_auth_file -out auth_url.txt -k $AUTH_FILE_KEY
@@ -15,5 +22,6 @@ test_level = ${TEST_LEVEL:-RunLocalTests}
 #sfdx force:source:deploy -p force-app -u TargetOrg -l $test_level -w -1
 
 echo "deploy"
-echo "$enc_auth_file"
-echo "$test_level"
+echo "${enc_auth_file}"
+echo "${test_level}"
+echo "${run_tests}"

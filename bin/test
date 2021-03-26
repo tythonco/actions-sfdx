@@ -24,5 +24,5 @@ scratch_def_file = ${SCRATCH_DEF_FILE:-config/project-scratch-def.json}
 # sfdx force:org:delete -p
 
 echo "test"
-echo "$enc_auth_file"
-echo "$scratch_def_file"
+echo "${enc_auth_file}"
+echo "${scratch_def_file}"

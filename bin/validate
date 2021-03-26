@@ -14,4 +14,4 @@ enc_auth_file = ${ENC_AUTH_FILE:-sfdx_auth_url.txt.enc}
 # sfdx force:source:deploy -c -p force-app -u TargetOrg -l RunLocalTests -w -1
 
 echo "validate"
-echo "$enc_auth_file"
+echo "${enc_auth_file}"
