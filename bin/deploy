@@ -9,7 +9,7 @@ run_tests = ${RUN_TESTS:-NotSet}
 if [ "${test_level}" = "RunSpecifiedTests" -a "${run_tests}" = "NotSet" ]
 then
 	echo "ERROR: Please specify Apex unit tests with run_tests argument"
-	exit
+	exit 1
 fi
 
 # Decrypt Auth URL File
