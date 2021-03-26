@@ -3,8 +3,11 @@
 set -eu
 
 while :; do
-  while getopts ":e:r:t:" arg; do
+  while getopts ":a:e:r:t:" arg; do
     case $arg in
+      a)
+        auth_file_key="$OPTARG"
+        ;;
       e) 
         enc_auth_file="$OPTARG"
         ;;
@@ -30,13 +33,18 @@ then
 fi
 
 # Decrypt Auth URL File
-#openssl enc -d -aes-256-cbc -in $enc_auth_file -out auth_url.txt -k $AUTH_FILE_KEY
+#openssl enc -d -aes-256-cbc -in ${enc_auth_file} -out auth_url.txt -k ${auth_file_key}
 
 # Authenticate DevHub Org
 #sfdx force:auth:sfdxurl:store -f auth_url.txt -d -a TargetOrg && rm auth_url.txt
 
-# Run validation deployment
-#sfdx force:source:deploy -p force-app -u TargetOrg -l $test_level -w -1
+# Run deployment
+#if [ "${test_level}" = "RunSpecifiedTests" ]
+#then
+  #sfdx force:source:deploy -p force-app -u TargetOrg -l ${test_level} -r ${run_tests} -w -1
+#else
+  #sfdx force:source:deploy -p force-app -u TargetOrg -l ${test_level} -w -1
+#fi
 
 echo "deploy"
 echo "${enc_auth_file}"

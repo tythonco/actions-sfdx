@@ -3,8 +3,11 @@
 set -eu
 
 while :; do
-  while getopts ":e:s:" arg; do
+  while getopts ":a:e:s:" arg; do
     case $arg in
+      a)
+        auth_file_key="$OPTARG"
+        ;;
       e) 
         enc_auth_file="$OPTARG"
         ;;
@@ -21,13 +24,13 @@ while :; do
 done
 
 # Decrypt Auth URL File
-# openssl enc -d -aes-256-cbc -in $enc_auth_file -out auth_url.txt -k $AUTH_FILE_KEY
+#openssl enc -d -aes-256-cbc -in ${enc_auth_file} -out auth_url.txt -k ${auth_file_key}
 
 # Authenticate DevHub Org
 # sfdx force:auth:sfdxurl:store -f auth_url.txt -d -a DevHub && rm auth_url.txt
 
 # Spin up new scratch org
-# sfdx force:org:create -v DevHub -s -f $scratch_def_file
+# sfdx force:org:create -v DevHub -s -f ${scratch_def_file}
 
 # Push Source
 # sfdx force:source:push

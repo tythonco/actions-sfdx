@@ -5,6 +5,9 @@ inputs:
     description: 'CI/CD action to execute'
     required: true
     default: 'validate'
+  auth_file_key:
+    description: 'Decryption key for auth file'
+    required: true
   enc_auth_file:
     description: 'Encrypted auth file to decrypt and use for authentication'
     required: true
@@ -25,6 +28,7 @@ runs:
   image: 'Dockerfile'
   env:
     ACTION: ${{ inputs.action }}
+    AUTH_FILE_KEY: ${{ inputs.auth_file_key }}
     ENC_AUTH_FILE: ${{ inputs.enc_auth_file }}
     SCRATCH_DEF_FILE: ${{ inputs.scratch_def_file }}
     TEST_LEVEL: ${{ inputs.test_level }}
