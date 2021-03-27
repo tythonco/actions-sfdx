@@ -8,33 +8,29 @@ The deploy, test-scratch, and validate commands all assume [authentication via S
 Your repository should contain an *encrypted* auth url file for your DevHub org as well as any other org you'll run deployments against such as QA & Production.
 These encrypted files will be decrypted using the AUTH_FILE_KEY secret set using either the visual workflow editor or in your repository settings.
 
-The `deploy` command accepts the following argument(s):
+All prebuilt commands (`deploy`, `test-scratch`, & `validate`) accept the following argument(s):
 
 | Argument | Decription | Default |
 | --- | --- | --- |
 | auth_file_key | The decryption key for the auth url file | `None` |
+| command | The command to execute; prebuilt options are `deploy`, `test-scratch`, & `validate` but generic shell commands are also accepted | `validate` |
 | enc_auth_file | The *encrypted* auth url file used by sfdx for org authentication | `sfdx_auth_url.txt.enc` |
+| source_path | Comma-separated list of paths to deploy to or validate against target org | `force-app` |
+
+The `deploy` command accepts the following additional argument(s):
+
+| Argument | Decription | Default |
+| --- | --- | --- |
 | run_tests | Lists the Apex classes containing the deployment tests to run; used when test-level is set to `RunSpecifiedTests` | `None` |
-| source_path | Comma-separated list of paths to deploy to or validate against target org | `force-app` |
-| test_level | Specifies which level of deployment tests to run; valid values are `NoTestRun`, `RunLocalTests`, & `RunAllTestsInOrg` | `NoTestRun` |
+| test_level | Specifies which level of deployment tests to run; valid values are `NoTestRun`, `RunSpecifiedTests`, `RunLocalTests`, & `RunAllTestsInOrg` | `NoTestRun` |
 
-The `test-scratch` command accepts the following argument(s):
+The `test-scratch` command accepts the following additional argument(s):
 
 | Argument | Decription | Default |
 | --- | --- | --- |
-| auth_file_key | The decryption key for the auth url file | `None` |
-| enc_auth_file | The *encrypted* auth url file used by sfdx for org authentication | `sfdx_auth_url.txt.enc` |
 | scratch_org_def_file | The json file used by sfdx for setting a scratch org's definition | `config/project-scratch-def.json` |
-| source_path | Comma-separated list of paths to deploy to or validate against target org | `force-app` |
 
-The `validate` command accepts the following argument(s):
-
-| Argument | Decription | Default |
-| --- | --- | --- |
-| auth_file_key | The decryption key for the auth url file | `None` |
-| enc_auth_file | The *encrypted* auth url file used by sfdx for org authentication | `sfdx_auth_url.txt.enc` |
-| source_path | Comma-separated list of paths to deploy to or validate against target org | `force-app` |
-
+The `validate` command does not accept any additional arguments.
 
 ## Examples
 
@@ -59,8 +55,8 @@ jobs:
     - name: Deploy to QA
       uses: tythonco/actions-sfdx@master
       with:
-        command: deploy
         auth_file_key: ${{ secrets.AUTH_FILE_KEY }}
+        command: deploy
         enc_auth_file: qa_auth_url.txt.enc
 ```
 
@@ -83,8 +79,8 @@ jobs:
     - name: Deploy to Production
       uses: tythonco/actions-sfdx@master
       with:
-        command: deploy
         auth_file_key: ${{ secrets.AUTH_FILE_KEY }}
+        command: deploy
         enc_auth_file: prod_auth_url.txt.enc
         test_level: RunLocalTests
 ```
@@ -108,10 +104,8 @@ jobs:
     - name: Test on Scratch Org
       uses: tythonco/actions-sfdx@master
       with:
-        command: test-scratch
         auth_file_key: ${{ secrets.AUTH_FILE_KEY }}
-        enc_auth_file: sfdx_auth_url.txt.enc
-        scratch_def_file: config/project-scratch-def.json
+        command: test-scratch
 ```
 
 ### Automated Validation
@@ -135,8 +129,8 @@ jobs:
     - name: Validate via check-only deployment
       uses: tythonco/actions-sfdx@master
       with:
-        command: validate
         auth_file_key: ${{ secrets.AUTH_FILE_KEY }}
+        command: validate
         enc_auth_file: prod_auth_url.txt.enc
 ```
 
