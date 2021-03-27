@@ -4,9 +4,9 @@ GitHub Action for CI/CD tasks and the general use of [sfdx](https://developer.sa
 
 ## Usage
 
-The deploy, test-scratch, and validate commands all assume [authentication via SFDX Auth Url](http://www.crmscience.com/single-post/2018/01/22/Salesforce-Logins-for-Continuous-Integration-and-Delivery).
+The `deploy`, `test-scratch`, and `validate` commands all assume [authentication via SFDX Auth Url](http://www.crmscience.com/single-post/2018/01/22/Salesforce-Logins-for-Continuous-Integration-and-Delivery).
 Your repository should contain an *encrypted* auth url file for your DevHub org as well as any other org you'll run deployments against such as QA & Production.
-These encrypted files will be decrypted using the AUTH_FILE_KEY secret set using either the visual workflow editor or in your repository settings.
+These encrypted files will be decrypted using the `AUTH_FILE_KEY` secret set using either the visual workflow editor or via your repository settings.
 
 All prebuilt commands (`deploy`, `test-scratch`, & `validate`) accept the following argument(s):
 
@@ -44,7 +44,7 @@ on:
   push:
     branch:
       - dev
-  worflow_dispatch:
+  workflow_dispatch:
 jobs:
   qa-deployment:
     name: QA Deployment
@@ -68,7 +68,7 @@ on:
   push:
     branch:
       - master
-  worflow_dispatch:
+  workflow_dispatch:
 jobs:
   prod-deployment:
     name: Production Deployment
