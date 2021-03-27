@@ -3,13 +3,16 @@
 set -eu
 
 while :; do
-  while getopts ":a:e:" arg; do
+  while getopts ":a:e:p:" arg; do
     case $arg in
       a)
         auth_file_key="$OPTARG"
         ;;
       e) 
         enc_auth_file="$OPTARG"
+        ;;
+      p)
+        source_path="$OPTARG"
         ;;
       *)
         echo Ignoring unknown option: $OPTARG
@@ -27,4 +30,4 @@ openssl enc -d -aes-256-cbc -md md5 -in ${enc_auth_file} -out auth_url.txt -k ${
 sfdx force:auth:sfdxurl:store -f auth_url.txt -d -a TargetOrg && rm auth_url.txt
 
 # Run validation deployment
-sfdx force:source:deploy -c -p force-app -u TargetOrg -l RunLocalTests
+sfdx force:source:deploy -c -p ${source_path} -u TargetOrg -l RunLocalTests

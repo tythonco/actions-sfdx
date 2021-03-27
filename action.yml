@@ -19,6 +19,10 @@ inputs:
     description: 'Config file used for creating scratch orgs'
     required: false
     default: 'config/project-scratch-def.json'
+  source_path:
+    description: 'Comma-separated list of paths to deploy to or validate against target org'
+    required: false
+    default: 'force-app'
   test_level:
     description: 'Test level to use during deployments (NoTestRun, RunSpecifiedTests, RunLocalTests, RunAllTestsInOrg)'
     required: false
@@ -31,5 +35,6 @@ runs:
     AUTH_FILE_KEY: ${{ inputs.auth_file_key }}
     ENC_AUTH_FILE: ${{ inputs.enc_auth_file }}
     SCRATCH_DEF_FILE: ${{ inputs.scratch_def_file }}
+    SOURCE_PATH: ${{ inputs.source_path }}
     TEST_LEVEL: ${{ inputs.test_level }}
     RUN_TESTS: ${{ inputs.run_tests }}

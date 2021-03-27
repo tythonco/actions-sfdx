@@ -3,13 +3,16 @@
 set -eu
 
 while :; do
-  while getopts ":a:e:s:" arg; do
+  while getopts ":a:e:p:s:" arg; do
     case $arg in
       a)
         auth_file_key="$OPTARG"
         ;;
       e) 
         enc_auth_file="$OPTARG"
+        ;;
+      p)
+        source_path="$OPTARG"
         ;;
       s)
         scratch_def_file="$OPTARG"
@@ -33,7 +36,7 @@ sfdx force:auth:sfdxurl:store -f auth_url.txt -d -a DevHub && rm auth_url.txt
 sfdx force:org:create -v DevHub -s -f ${scratch_def_file}
 
 # Push Source
-sfdx force:source:push
+sfdx force:source:deploy -p ${source_path}
 
 # Run Test(s)
 sfdx force:apex:test:run -c -r human
