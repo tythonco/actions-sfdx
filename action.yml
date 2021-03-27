@@ -6,10 +6,10 @@ inputs:
     required: true
     default: 'validate'
   auth_file_key:
-    description: 'Decryption key for auth file'
+    description: 'Decryption key for auth url file'
     required: false
   enc_auth_file:
-    description: 'Encrypted auth file to decrypt and use for authentication'
+    description: 'Encrypted auth url file to decrypt and use for authentication'
     required: false
     default: 'sfdx_auth_url.txt.enc'
   run_tests:
