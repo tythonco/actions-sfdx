@@ -42,7 +42,7 @@ Example workflow that triggers either manually or on each commit made to the `de
 name: QA Deployment Workflow
 on:
   push:
-    branch:
+    branches:
       - dev
   workflow_dispatch:
 jobs:
@@ -66,7 +66,7 @@ Example workflow that triggers either manually or on each commit made to the `ma
 name: Production Deployment Workflow
 on:
   push:
-    branch:
+    branches:
       - master
   workflow_dispatch:
 jobs:
