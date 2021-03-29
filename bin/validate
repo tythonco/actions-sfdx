@@ -1,0 +1,33 @@
+#!/bin/sh
+
+set -eu
+
+while :; do
+  while getopts ":a:e:p:" arg; do
+    case $arg in
+      a)
+        auth_file_key="$OPTARG"
+        ;;
+      e) 
+        enc_auth_file="$OPTARG"
+        ;;
+      p)
+        source_path="$OPTARG"
+        ;;
+      *)
+        echo Ignoring unknown option: $OPTARG
+        ;;
+    esac
+  done
+  OPTIND=$((OPTIND+1))
+  [ $OPTIND -gt $# ] && break
+done
+
+# Decrypt Auth URL File
+openssl enc -d -aes-256-cbc -md md5 -in ${enc_auth_file} -out auth_url.txt -k ${auth_file_key}
+
+# Authenticate Target Org
+sfdx force:auth:sfdxurl:store -f auth_url.txt -d -a TargetOrg && rm auth_url.txt
+
+# Run Validation
+sfdx force:source:deploy -c -p ${source_path} -u TargetOrg -l RunLocalTests

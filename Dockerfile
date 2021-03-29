@@ -1,4 +1,4 @@
-FROM tythonco:docker-sfdx-cli
+FROM salesforce/salesforcedx
 
 LABEL version = "1.0.0"
 LABEL maintainer="Tython Devs <devs@tython.co>"
@@ -14,9 +14,11 @@ COPY entrypoint.sh /
 ENV PATH="/usr/local/bin:${PATH}"
 
 RUN chmod +x /entrypoint.sh
-RUN apk update \
-	&& apk add --no-cache openssl\
-	&& rm -rf /var/lib/apt/lists/* \
-	&& rm -rf /var/cache/apk/*
+RUN chmod +x /usr/local/bin/deploy
+RUN chmod +x /usr/local/bin/test-scratch
+RUN chmod +x /usr/local/bin/validate
+RUN apt-get update \
+	&& apt-get install -y openssl \
+	&& rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT ["/entrypoint.sh"]

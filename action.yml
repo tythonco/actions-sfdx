@@ -1,0 +1,40 @@
+name: 'CI/CD with sfdx'
+description: 'GitHub Action for CI/CD tasks and the general use of [sfdx](https://developer.salesforce.com/platform/dx) to automate deployments and testing of Salesforce development projects.'
+inputs:
+  command:
+    description: 'Command to execute; prebuilt options are deploy, test-scratch, & validate'
+    required: true
+    default: 'validate'
+  auth_file_key:
+    description: 'Decryption key for auth url file'
+    required: false
+  enc_auth_file:
+    description: 'Encrypted auth url file to decrypt and use for authentication'
+    required: false
+    default: 'sfdx_auth_url.txt.enc'
+  run_tests:
+    description: 'Lists the Apex classes containing the deployment tests to run; used when test-level is set to RunSpecifiedTests'
+    required: false
+  scratch_def_file:
+    description: 'Config file used for creating scratch orgs'
+    required: false
+    default: 'config/project-scratch-def.json'
+  source_path:
+    description: 'Comma-separated list of paths to deploy to or validate against target org'
+    required: false
+    default: 'force-app'
+  test_level:
+    description: 'Test level to use during deployments (NoTestRun, RunSpecifiedTests, RunLocalTests, RunAllTestsInOrg)'
+    required: false
+    default: 'NoTestRun'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    COMMAND: ${{ inputs.command }}
+    AUTH_FILE_KEY: ${{ inputs.auth_file_key }}
+    ENC_AUTH_FILE: ${{ inputs.enc_auth_file }}
+    SCRATCH_DEF_FILE: ${{ inputs.scratch_def_file }}
+    SOURCE_PATH: ${{ inputs.source_path }}
+    TEST_LEVEL: ${{ inputs.test_level }}
+    RUN_TESTS: ${{ inputs.run_tests }}
